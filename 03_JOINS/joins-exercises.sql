@@ -3,18 +3,43 @@
 
 -- 1. The city name, country name, and city population of all cities in Europe with population greater than 1 million
 -- (36 rows)
+SELECT c.name, co.name, c.population
+FROM city c 
+JOIN country co
+ON c.countrycode = co.code
+WHERE c.population > 1000000 AND co.continent = 'Europe';
+
 
 -- 2. The city name, country name, and city population of all cities in countries where French is an official language and the city population is greater than 1 million
 -- (2 rows)
+SELECT c.name, co.name, c.population
+FROM city c
+JOIN country co ON c.countrycode = co.code
+JOIN countrylanguage cl ON cl.countrycode = co.code
+WHERE cl.language = 'French' AND cl.isofficial = 'true' AND c.population > 1000000;
+
 
 -- 3. The name of the countries and continents where the language Javanese is spoken
 -- (1 row)
+SELECT co.name, co.continent
+FROM country co
+JOIN countrylanguage cl ON cl.countrycode = co.code
+WHERE cl.language = 'Javanese';
 
 -- 4. The names of all of the countries in Africa that speak French as an official language
 -- (5 row)
+SELECT co.name
+FROM country co
+JOIN countrylanguage cl on co.code = cl.countrycode
+WHERE cl.language = 'French' AND cl.isofficial = 'true' AND co.continent = 'Africa';
+
 
 -- 5. The average city population of cities in Europe
 -- (average city population in Europe: 287,684)
+SELECT ROUND(AVG(c.population))
+FROM city c
+JOIN country co ON co.code = c.countrycode
+WHERE co.continent = 'Europe';
 
 -- 6. The average city population of cities in Asia
 -- (average city population in Asia: 395,019)
